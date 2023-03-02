@@ -1,0 +1,239 @@
+// check the 'express&viewEngine.js' file for sample codes.
+
+
+                Types of DATABASES
+  SQL Databases
+- uses Tables, Rows and COlums to store Data
+
+  NoSQL Databases
+- Makes use of collections and documents to store Data
+
+Well be learning MongoDB (a NoSQL database)
+
+        How NoSQL works?
+- It is split up into COLLECTIONS
+- COLLECTIONS are like tables in SQL Databases.
+
+Each collection is used to store a Particular type of data.
+e.g a User collection to store User Documents ,
+    a Blog collection to store Blog Documents.
+ 
+Each collection will have only one type of documents.
+
+COLLECTION - is where you are going to store a load of documents of a certail type
+- Document is like a record in a SQL Database.
+- each Document represent a single item of Data
+     i.e a Blog Document can be an object that represents a single blog object
+        {
+                id: '123kdodl_#,
+                title: 'My first Blog',
+                body: 'this is a blog post'
+        }
+
+        MongoDB Setup and Atlas
+There are different ways to setup MongoDB
+
+- You can either install MongoDB locally on your computer and use it and deploy it
+        or
+- You can use a cloud database which is already hosted for us (kinda easier to manage) 
+
+For this tutorial, we will be using the second method
+The CLoud Service we will be using is called ' MongoDB Atlas'
+
+visit MongoDB atlas, and signup/login
+
+- create a cluster
+ Next cretae a database and a collection inside that database.
+   To Do That...
+- click on browse collections in the Dashboard page
+- and click on Add my Own Data to create your collection (and give it a name)
+
+  Next is to create a User.
+The user can/will be used for Database access from our code.
+
+   To Do This...
+Go to 'Database access' Under 'SECURITY' section from the side nav bar
+
+when creating user, remember to give read and write 'user Priviledges' to the user.
+
+(user: netninja)
+(password: ninja122)
+
+To Connect to the Database go to 'database' section under 'Deployment' in the side navbar
+and click on the Connect button.
+
+- click on Connect your application
+- copy the connection string, You wil need it later in your app.
+        That is the connection string you will use to connect to the databse in your express app.
+        so you can save it in a variable i.e const dbURI = `string`
+
+NOTE:
+YOU can connect to the database using the plain MongoDB API and package but it can sometimes be complicated
+So for this tutorial we will be using a framework called 'Mongoose' to connect and interact with the database. 
+   it makes it easier.
+
+
+        MONGOOSE, MODELS & SCHEMAS
+Mongoose is an ODM (Object Document Mapping) Library.
+
+- it wraps the MongoDb API & provides us with an easier way to connect and communicate with
+        the database.
+
+we work with MongoDB and Moggose by creating Schemas & Models
+
+- A Schema represents the structure of a type of data/document (think of it as Models.model in django)
+- it contains the properties present in a data. like an object and it's properties.
+
+e.g 
+User Schema                    Blog Schema:
+- name (string), required        - title (string), required
+- age (number)                  - snippet (string), required
+- bio (string), required         - body (string),  required
+
+Models are created Based on the Schema
+- The Models allows us to communicate with the database collections
+- The Model is what is saved to the databse
+
+        Using Mongoose to connect to the database (npm install mongoose)
+import it (const mongoose = require('mongoose'))
+
+Then use a .connect method
+
+mongoose.connect() // this expects an arguement of a connection string
+
+mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true } ) // the second object paramter 
+                                                                             // is jsut to prevent some errors
+
+The mongoose.connect() is an assynchronus process.
+
+        CREATING A SCHEMA (this can be done inside a seperate folder/file.)
+const mongoose = require('mongoose');
+        // const 'varname' = mongoose.Schema
+        E.g
+const Schema = mongoose.Schema
+
+const 'schemaName' = new 'varName'({
+        properties...
+
+        name: {
+                type: String,
+                required: true
+        },
+        age: {
+                type: String,
+                age: false
+        }
+})
+
+After Creating your Schema The next thing to do is to create your model.
+That Model will be based on your Schema
+
+const 'modelName' = mongoose.model()
+
+* d name of the models usually start with a Capital Letter.
+
+it takes 2 arguements, first arguement is the name of the module 'i.e the collection you want to save to'.
+                       second arguement is the scheema you want to base the model on. 'i.e you wanna base it on the scheema you just created'
+
+// model name should be singular of the collection name it will be stored in.
+
+After that , export the model
+
+example :
+
+const Blog = mongoose.model('Blog', ''schemaName'')
+module.exports = Blog;
+
+
+                GETTING AND SAVING DATA
+
+SAVING Data
+
+import the model you created i.e 
+const Blog = require('./path/to/blog/model')
+
+
+Then create a new instance of the blog class
+
+const 'instanceName' = new Blog ({
+        ...add properties of the model scheema
+                i.e
+        name: 'my firrst blog',
+        snippet: 'lorem ipsum dolor initi maxilla'        
+})
+
+then to save to the database.
+
+instanceName.save() // an assynchronus process.
+  .then ((data) => {
+            res.send(data)
+        })
+        .catch((err) => {
+            console.log(err)
+        })
+   })
+
+GETTING ALL DATA FORM DATABASE (use the .find() func )
+
+'modelBlog'.find()
+        .then((result) => {
+                console.log(result)
+        })
+        .catch((err) => {
+                console.log(err)
+        })
+        
+GET/ FIND OBJECT BY IND (use .findById() func )
+
+'modelBlog'.findById('idoftheObject')
+        .then((result) => {
+                console.log(result)
+        })
+        .catch((err) => {
+                console.log(err)
+        })
+
+
+        ROUTE PARAMETERS
+Variable parts of a route (localhost:3000/blogs/:'param')
+
+        How to extract Route Parameter in express ?
+
+
+DELETE OBJECT / DOCUMENT 
+
+To Delete Objects by a specikfic ID [ 'Model'.findByIdAndDelete ]
+
+Note when sending an ajax request from Javascript. (i.e not a form )
+in node you can't use a redirect as a respoonse on the server side.
+
+redirect can only be done on the client side
+
+To do this, a re-direct proprty will be sent  back to the browser after delete is successlful
+Then the redirect property will have tht route you want to redirect to.
+
+app.delete('/', (req,res) => {
+        // get the id parameter from the url
+
+        const {'parameterName'} = req.params.'parameterName'
+
+        'modelBlog'.findByIdAndDelete('parameterName')
+                .then ((result) => {
+                        res.json({redirect: '/path/to/redirect'}) // sending back the redirect object
+                })
+                .catch((err) => {
+                        console.log(err)
+                })
+})
+
+THEN IN THE CLIENT SIDE
+
+// to rediect use window.location.href = 'responseData'.'redirectPropertyName'
+
+After attaching event listener to the Delete Button
+
+fetch ('delete/endpoint/url', {method: 'DELETE'})
+        .then ((respoonse) => respoonse.json)
+        .then ((data) => window.location.href = data.redirect)
+        .catch((err) => console.log(err))
+

@@ -1,0 +1,52 @@
+EXPRESS
+
+- express is basically just a framework that helps us to easily manage our routing, request,
+     server side logic and responses in a much easier way.
+
+NOTE: you don't have to use express, you can just do everyting using raw node.
+
+But express makes it easier and faster
+
+INSTALL
+npm install -g express
+
+setUP
+- import express
+define your app with the express function call
+
+- then listen for request
+
+    syntax
+const 'importName' = require('express')
+const 'importName' = express() 
+
+// Define a get request.
+'importName'.get() // takes 2 params, the url path and a callback function
+ 
+
+// to listen for request
+'importName'.listen('portNumber)
+
+// listen for get request
+'importName'.get('path', callbackFunc)
+
+i.e 
+let's say the 'importName' is express
+
+express.get('/', (req, res) => {
+    ...
+})
+
+To send back a response,
+express will automatically set the staus code for us, so no need to manually do that
+express will also automatically set the content-type header for us. so we don't need to manually set it like we do in node
+
+sending back 
+
+NOTE:
+But you can manually set the statusCode if you want
+
+example:
+res.staus('code').sendFile('path/to/html')
+
+

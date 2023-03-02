@@ -1,0 +1,28 @@
+<html lang="en">
+<!-- Adding head Partail file -->
+<%- include('../partials/head.ejs')%>
+<!-- END -->
+
+<body>
+    <% const mapBlog = blogs.map(item => item.title )%>
+
+    <!-- Adding a Partail file -->
+    <%- include('../partials/navbar.ejs')%>
+    <!-- END -->
+
+    <div class="Blog content">
+        <h1>All Blogs</h1>
+        <% if(blogs.length > 0) { %>
+            <% blogs.map(item => { %>
+                <a href="/blogs/<%= item._id %>">
+                    <h2><%= item.title %></h2>
+                    <p><%= item.snippet %></p>
+                </a>
+            <% }) %>
+        <% } else { %>
+            <p>No Blogs Post Available..</p>
+        <% } %>
+    </div>
+    
+</body>
+</html>

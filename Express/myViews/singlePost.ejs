@@ -1,0 +1,39 @@
+<html lang="en">
+
+<!-- Adding head Partail file -->
+<%- include('../partials/head.ejs')%>
+<!-- END -->
+
+<body>
+
+    <!-- Adding a Partail file -->
+    <%- include('../partials/navbar.ejs')%>
+    <!-- END -->
+    <div class="single-blog">
+        <h1>TITLE: <%= blog.title %></h1>
+        <p>snippet: <%= blog.snippet %></p>
+
+        <a class="delete" id="delete-btn" data-doc="<%= blog._id%>">Delete Blog</a>
+    </div>
+    
+    <script>
+        const DeletBTN = document.getElementById('delete-btn')
+
+        // http://localhost:3000/blogs/63f5f53f2c980df3195badbf
+        DeletBTN.addEventListener('click', (e) => {
+            const endPoint = `http://localhost:3000/blogs/${DeletBTN.dataset.doc}` 
+
+            fetch(endPoint, {
+                method: 'DELETE'
+            })
+            .then ((res) => {
+                res.json()
+            })
+            .then((data) => window.location.href = data.redirect)
+            .catch(err => console.log(err))
+        })
+
+
+    </script>
+</body>
+</html>

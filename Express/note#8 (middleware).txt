@@ -1,0 +1,56 @@
+MIDDLEWARE
+
+- A name for any code that runs(on the server) between getting a request and sending a response
+
+MiddleWare uses examples:
+- use it to logger middleware to log details of every request
+- Authentication, check middleware for protected routes
+- use middleware to parse JSON Data
+
+- we have being using middleware since, the get method is an example of a middleware
+ 
+MiddleWares are mostly written on the top of the code.
+
+But app.use() method is mostly used to define MiddleWares
+
+app.use((req, res) => {
+    code...
+})
+
+Using next()
+- This si used to tell the browser what nect to do after it runs a middleware
+- i.e it tells react to move on to the next line or function. 
+
+app.use((req,res,next) => {
+    code...
+    next()
+})
+
+3RD PARTY MIDDLEWARE
+
+syntax for using 3rd party middleware [ app.use('middleware'())  ]
+morgan - A logger middleware. it logs out infromation about request
+
+We will be using the morgan middleware (npm install morgan)
+
+- import the middleware ( const morgan = require('morgan'))
+
+Then:
+app.use(morgan('dev'))
+
+        STATIC FILES
+Static files, (things like a css file, images)
+
+-to make these files available to the browser, you will need to use the static middleware built into express
+
+first 
+create a folder (i'm naming it public) then move all your static files inside.
+
+syntax: app.use('importedExpressName'.static('staticFolderName'))
+
+app.use(express.static('public'))
+
+
+
+
+

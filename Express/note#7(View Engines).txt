@@ -1,0 +1,80 @@
+A View Engine is used to inject some kindoff dynamic data into your HTML.
+
+e.g
+Data from a database like blog POST.
+
+View Engine Allows us to write HTML Templates in an HTML syntax, but alos allows us to inject dynamic data and logics.
+The Resulting HTML Page with the data is then served to the browser.
+
+We will be using the 'ejs Engine' for this tutorial.(npm install ejs)
+
+// to register your view engine use  app.set()
+
+app.set() let's us to configure some application settings.
+
+syntax.
+app.set(''view engine'', 'viewEngine Name')
+
+e.g
+// registering view engine.
+app.set('view engine', 'ejs')
+
+automatically, express and ejs will look inside a views folder for our different views(HTML pages)
+if your views folder is named something else, you can tell express what the folder name is with
+
+app.set('views', 'NameOfFolder')
+
+To render a view
+instead of res.sendFile()
+
+it will be
+res.render('viewFileName')
+
+Note: Ejs file name should end with an extension '.ejs' i.e 'index.ejs'
+
+You can also pass some data as a second paramter of the render method.
+second paramter will be an object that will contain whatever data you wanna pass.
+
+i.e res.render('viewFileName', {name: 'calvin', age: '23'})
+
+The paramter can then be outputed in the ejs view using it's tags <%='title Name' %>
+
+        PASSING DATA TO VIEWS
+How to cretae dynamic contemt
+
+we will use ejs tags inside the HTML/ejs file ( <% %> )
+
+Some dynamic Javascript code can then be written inside the ejs tag. similar to how { } works in react
+e.g <% const myName = 'Akpan Caleb' %>
+
+when you want to output a code. i.e you want to view the code in browser.
+you add equals sign after the first percent tag '%'
+
+<p> <%= myName %> </p>
+
+
+NOTE: ALL THE FUNCTIONALOTIES OF THE EJS ENGINE IS DONE ON THE SERVER.
+        I.E THE EJS RETURNS A VALID HTML TO THE BROWSER WITH ALL THE GETTING AND PASSING OF DATA ALREADY DONE ON THE SERVER.
+
+    IT USES SERVER SIDE RENDERING.
+
+        PARTIALS (think of resuable component in react)
+- This are like resuable files or Templates.
+kinda like a navbar component in React. but in ejs they are called PARTIALS.
+Because they are templates that are used in more than one view.
+
+How to Do This?
+- Create a folder, call it partials
+- create all the partials files inside.
+
+Then to add the partial file.
+
+use the ejs tags but there would be a minus(-) after the first %.
+The include('path/to/partial/file')
+
+<%- include('/path/...')%>
+
+For Partials we are using a minus(-) sign not an equals sing(=) Because..
+
+when we use '=' it escapes special characters. i.e it will return a string value instead of raw HTMl
+But '-' dose'nt do that

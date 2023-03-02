@@ -1,0 +1,41 @@
+install nodemon package using npm
+
+- nodemon is a package that helps to create a live and reload server
+    i.e so that you won't have to be manually reloading the serve whenever you make a change
+
+Then instead of using 'node 'server'FileName' just use 'nodemon 'serverFileName'' to run your server file
+
+
+PACKAGE JSON FileName
+- a JSON file that keeps track of any packages/dependencies that are installed locally to/for our project
+- for any thrid party dependencies you want to use, you shoul create a package.json file
+
+to do this, use 'npm init'
+
+// I am intalling loadash for this tutorial (npm install -g lodash) or 
+                                            (npm install --save lodash) : to register it in our package.json file
+
+Installing a locall package will also create a node_modules folder.
+All the different files, folders & dependencies needed for that package will be kept inside that node_modules folder
+
+LODASH
+- a js library that provides utility functions and helper functions/methods for your app
+    i.e map, filter...
+
+Apparently it makes with arrays, objects, numbers & strings easier.
+
+Some Methods (DOCUMENTATION: https://lodash.com/docs/4.17.15#chunk)
+
+first import it
+const 'name' = require('lodash') // common name use id _ // const _ = require('lodash')
+
+_.random()  - to return an random number. takes 2 parme. 1st lower bound, 2nd upper bound
+_.once()  - used to return a function only once. takes 1 param, the function to run
+
+i.e _.random(0,5) // return a random number between 0 and 5
+
+NOTE: If you the node_modules folder is not present code. i.e you imported the code from github
+      To install all 3rd party packages/dependencies needed for the project.
+
+just type 'npm install' - this will automatically look into the package.json file present and install
+    all packages in the dependencies object.

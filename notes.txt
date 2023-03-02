@@ -1,0 +1,136 @@
+        THE GLOBAL OBJECT
+- node gives us access to  a global object (this object has different properties we can use)
+- similar to the 'window' object inside the browser
+    i.w window.alert(), window.addEventListener, window.setTimeoute ...
+
+inside browser 'window is the global object. But
+In node the global object is 'gllobal'
+
+2 PROPERTIES to take NOTE off.
+
+__dirname : gets the absolute path of the current folder that a particular file is in. 
+__filename : gets the absolute path of the current folder with the file name added on as well.
+
+
+        MODULES & REQUIRE
+- modules is basically just splitting your code into different files to make more reusable/easier to read
+
+
+To import a file, use a require statement.
+const 'name' = require('path/to/file')
+
+- when you require for a file, node will automatically look for that file and run it.
+- but importing file with requir dose'ne give you access to the properties in that imported file.
+    i.e you will not be able to access properties of the imported file from the file you imported it too
+
+To be able to get access to the properties, you will need to manaually export data or properties from the file you want to import.
+
+How?
+* inside the file you want ot export
+module.exports = 'whatever data/propertie you want to export'
+
+then *inside file you want to import it too.
+
+const 'name' = require('path/to/file')
+console.log('name'.'propertieNameExported')
+
+NOTE: You can also just destructure the propertie as you are importing it with require
+
+// We can also import/require some core modules that comes with node.JS
+example the os module
+
+'os' : A core module built into node
+It comes with different methods and properties.
+some methods in os --
+
+os.platform() : finds us the platform that you're running on
+os.homedr() : finds the home directoru
+
+
+        THE FILE SYSTEM ('fs')
+A core module that allows you to read,write,delete files in a SYSTEM
+
+first off you need to import
+const 'anyName' = require('fs')
+e.g const fs = require('fs')
+
+NOTE: All operations occurs assynchronously
+
+HOW TO READ A FILE
+fs.readFile()
+readFile takes 2 arguements
+    first: path to the file you want to read
+    second: a callback function that will run when reading file is done.
+
+Note: reading the file is an assynchronous operation so th second prameter'function' will wait
+    for the file to finish readig before running.
+    you can use the function to check if there was an error and to consoleLog the data read from the file
+
+syntax
+fs.readFile('path/to/file', (err, data) => {
+    if(err) {
+        console.log(err)
+    } else {
+        console.log(data.toString()) // without toString() method, it will consoleLog a buffer not the acutal data
+    }
+})
+
+HOW TO WRITE TO A FILE
+fs.writeFile.
+writeFile takes 3 arguements
+    first: path to file you want to write
+    second: what you want ot write i.e the text you wanna write
+    third: is the callback function
+
+Note: if you're trying to wrte to a file that dose'nt exist,
+        Node will just automatically create the file for you wit the path specified and write to it.
+
+syntax
+fs.writeFile('path/to/file', 'what to write', () => {
+    console.log('file written')
+})
+
+WORKING WITH DIRECTRIES
+e.g if you want to create a new folder
+
+use fs.mkdir('path/name/of/folder', (err) => {
+    if (err) {
+        console.log(err)
+    } else {
+        console.log('folder created')
+    }
+})
+
+to REMOVE a DIRECTORY, use (rmdir)
+
+fs.rmdir('directory/path', (err) => {
+    if(err) {
+        console.log(err)
+    }
+    else {
+        console.log('folder removed')
+    }
+})
+
+To Check is something exist i.e a folder or a file,
+use fs.existsSync('path/to/file/or/folder')
+
+        STREAMS & BUFFERS
+STREAMS
+- allows you to start using the data form a file before it is fully read.
+    i.e if the file you are reading from is big, it might take time to fully read and process it
+
+small chunks of data called BUFFER are sent down the stream bit by bit
+
+SOME kind of streams.
+Read Streams and Write Streams
+
+Read data with [Read Streams] and write data with [write Streams]
+
+TO Read data with read stream[fs.createReadStream()]
+
+1st parameter: where you wanto read data from i.e path
+2nd parameter(optional): you can specify an object for with a parameter for encoding.
+
+const 'varName' = fs.createReadStream('path/to/file', {encoding: 'utf-8'})
+

@@ -1,0 +1,70 @@
+The Express Router is used to Split Code into like different File.
+
+    EXPRESS ROUTER
+- used to manage all routes more efficiently and tidely
+- i.e split routes in the (main[server/app] file ) into different smaller files 
+
+Basically Modularizing the routes into it's seperate files.
+
+
+To DO THis:
+
+Create a folder (i'm naming it `routes`) to store all the different routes files
+Then create files inside the folders to store a particular route.
+
+
+Then inside the routes file.
+imprt express and create a new instance of express Router
+
+i.e
+const express = require('express')
+
+const router = express.Router()
+
+Then attach all the path handlers to the router instead of the express app.
+
+i.e
+CODE BEFORE
+
+app.get('/route', (req,res) => {
+
+})
+
+CODE NOW
+
+router.get('/route/path', (req, res) => {
+
+})
+
+Then Export the router at the bottom of the file.
+
+module.exports = router 
+
+    Go Back to the main 'app/server' file
+
+and import the routes file.
+
+const 'VarNameForRouteFileName' = require('path/to/route/file')
+
+
+Then to attach routes file to the main app
+
+just make use of 
+
+app.use(`VarNameForRouteFileName`)
+
+NOTE:
+The app is the variable name for the express app at the top of the file. (it can be change. depending on the variable name of the express call)
+
+i.e if it was ` myApp = Express() `
+
+it would be...
+myApp.use(`VarNameForRouteFileName`)
+
+    OR
+You can scope the the routes file to a particular starting url.
+i.e thinK of it like url nesting in react router.
+
+How.
+
+app.use('/start/url', `VarNameForRouteFileName`) // this routes file will only run when the url begins with the '/start/url'

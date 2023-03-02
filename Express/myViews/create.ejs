@@ -1,0 +1,26 @@
+<html lang="en">
+
+<!-- Adding head Partail file -->
+<%- include('../partials/head.ejs')%>
+<!-- END -->
+
+<body>
+
+    <!-- Adding a Partail file -->
+    <%- include('../partials/navbar.ejs')%>
+    <!-- END -->
+    <div class="create-blog">
+        <form action="/blogs" method="POST">
+            <label for="title">Blog: title</label>
+            <input type="text" id="title" name="title" required>
+            <label for="snippet">Blog snippet</label>
+            <input type="text" id="snippet" name="snippet" required>
+            <label for="body">Blog body</label>
+            <input type="text" id="body" name='body' required>
+            <button> Submit </button>
+        </form>
+    
+    </div>    
+    
+</body>
+</html>

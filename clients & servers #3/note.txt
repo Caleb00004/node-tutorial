@@ -1,0 +1,102 @@
+IP addresses
+
+- This are like unique address of computers connected to the internet
+
+Domain Names are used to mask the IP addresses.
+
+The communication between the server and the client(browser) is made possible via HTTP.
+
+CREATING A SERVER 
+To manaually create a server in Node
+the server listens to request from the browser and decides what responses to send to the browser.
+
+- The first thing to do is to import/require the http module
+    syntax
+const 'importVarName' = require('http')
+    then
+'importVarName'.createServer()
+
+createServer() - takes in a callback function. with 2 params req & res objects
+                The callback func will run anytime a request comes into the server
+
+                * req object : has info about the request made i.e url being requested, request type (POST,GET...)
+                * res object : used to send response to the user in the browser
+e.g
+const 'varibale' = 'importVarName'.createServer((req, res) => {
+
+})
+
+ 
+
+To Start Listening for request in your server.
+
+server.listen('PORT_NUMBER', 'localhost', callbackFunction) // localhost is already there by default so you can skip it.
+
+- callbackFunction triggers when you start listening
+
+e.g
+'varibale'.listen(3000, 'localhost', () => {
+
+})
+
+        LOCALHOST & PORT NUMBERS
+- localhost is like a domain name on the web
+    but this one takes us to our computers IP Address
+
+meaning: when you're connecting to a localhost domain in a browser, the browser is connecting us back to our own computer
+            i.e our computer is acting as a host for our website.
+
+
+Response Object
+Res Headers tells kindoff response is coming back to it. i.e aht kinda data we're sening back.
+    i.e is it texts, HTML, JSON etc.
+
+Res Headers can also be used to set cookies
+
+res.setHeader('content-type', 'type of data to send back i.e 'text/html' 'text/plain' ')
+
+res.write('Heelo Boyy')   // to write/send data back to a request.
+res.end() // to end a request.
+
+        BASIC ROUTING   
+
+        STATUS CODES
+- staus codes describe the type of response sent to the browser
+
+200 - OK (i.e request is ok)
+301 - Resource moved (i.e a permanent redirect)
+404 - NOT Found (i.e file not found/error)
+500 - Internal Server Error
+
+RANGES OF STATUS CODES
+
+100 Range - informational responses
+
+200 Range - success codes
+
+300 Range - code for redirect 
+
+400 Range - user or client error codes
+
+500 - server error codes
+
+
+    How Add Status Codes to Responses
+- you can do this by just taking the response object 'res' and
+    use a property called 'statusCode' and set it equal to something
+
+i.e
+    res.statusCode = 200
+
+    REDIRECTS
+use the response header
+
+syntax
+res.setHeader('Location', 'path/to-redirect/to')
+
+e.g
+if (req.url == '/about-me') {
+    res.setHeader('Location', '/about')
+}
+
+checking the request url path amd redirect it to a different already existing path
